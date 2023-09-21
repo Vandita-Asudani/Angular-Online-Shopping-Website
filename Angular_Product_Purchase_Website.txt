@@ -1,0 +1,836 @@
+1.1 container.component.css
+
+.wrapper{
+    margin: 0px auto;
+    width: 820px;
+}
+
+
+
+
+
+1.2 container.component.html
+
+<div class="wrapper">
+    <app-nav></app-nav>
+    <app-header></app-header>
+    <app-notification></app-notification>
+    <app-product-section></app-product-section>
+</div>
+
+
+
+
+
+1.3 container.component.ts
+
+import { Component } from "@angular/core";
+
+
+@Component({
+    selector: 'app-container',
+    templateUrl: './container.component.html',
+    styleUrls: ['./container.component.css']
+})
+
+export class ContainerComponent{
+
+}
+
+
+
+
+
+
+
+
+
+
+
+2.1 filter.component.css
+
+.filter-container{
+    margin: 10px 20px;
+}
+input[type=radio]{
+    margin-bottom: 30px;
+    margin-left: 20px;
+}
+
+
+
+
+
+2.2 filter.component.html
+
+<div class="filter-container">
+    <span>Filter:</span>
+
+    <input type="radio" name="filter" value="All" [(ngModel)]="selectedButton" (change)="filterChange()">
+    <span>All products(</span>{{all}}<span>)</span>
+
+    <input type="radio" name="filter" value="Available" [(ngModel)]="selectedButton" (change)="filterChange()">
+    <span>Available products(</span>{{available}}<span>)</span>
+
+    <!--input type="radio" name="filter" value="Not available">
+    <span>Unavailable products</span-->
+</div>
+
+
+
+
+
+2.3 filter.component.ts
+
+import { Component, EventEmitter, Input, Output } from '@angular/core';
+
+@Component({
+  selector: 'app-filter',
+  templateUrl: './filter.component.html',
+  styleUrls: ['./filter.component.css']
+})
+export class FilterComponent {
+
+@Input() all:number=0;
+@Input() available:number=0;
+
+selectedButton:string='All';
+
+@Output()
+selectionChange: EventEmitter<string> = new EventEmitter<string>();
+
+filterChange(){
+  this.selectionChange.emit(this.selectedButton)
+  //console.log(this.selectedButton)
+}
+}
+
+
+
+
+
+
+
+
+
+
+
+
+3.1 header.component.css
+
+.header{
+    height: 280px;
+    padding: 30px 40px;
+    display: flex;
+    background-color: #fff;
+}
+.site-slogan{
+    width: 420px;
+    margin-left: 50px;
+    text-align: center;
+}
+h2{
+    font-size:45px;
+}
+
+
+
+
+
+3.2 header.component.html
+
+<div class="header">
+    <div class="site-image">
+        <img src="/assets/shopping.avif" height="240" widht="320">
+    </div>
+    <div class="site-slogan">
+        <h2>{{  getslogan() }}</h2>
+    </div>
+</div>
+
+
+
+
+
+
+3.3 header.component.ts
+
+
+import { Component } from '@angular/core';
+
+@Component({
+  selector: 'app-header',
+  templateUrl: './header.component.html',
+  styleUrls: ['./header.component.css']
+})
+export class HeaderComponent {
+  getslogan(){
+        return 'Your one stop shop for everything.';
+  } 
+}
+
+
+
+
+
+
+
+
+
+
+
+
+4.1 nav.component.css
+
+.navbar{
+    display: flex;
+    background:#F5B041; /*F5B041*/
+}
+.site-name{
+    padding: 5px 30px;
+    color:#E74C3C; /*E74C3C*/
+}
+.site-menu{
+    padding: 10px 30px;
+    margin-left: 100px;
+}
+a{
+    text-decoration: none;
+    color:#212F3D; /*212F3D*/
+    margin: 0px 10px;
+}
+
+
+
+
+
+4.2 nav.component.html
+
+<div class="navbar">
+    <div class="site-name">
+        <h2>{{ sitename }}</h2>
+    </div>
+    <div class="site-menu">
+        <a href="#">HOME</a>
+        <a href="#">ABOUT</a>
+        <a href="#">CONTACT</a>
+        <a href="#">CART</a>
+        <a href="#">PRODUCTS</a>
+    </div>
+</div>
+
+
+
+
+
+4.3 nav.component.ts
+
+import { Component } from '@angular/core';
+
+@Component({
+  selector: 'app-nav',
+  templateUrl: './nav.component.html',
+  styleUrls: ['./nav.component.css']
+})
+export class NavComponent {
+sitename:string='eShopping';
+}
+
+
+
+
+
+
+
+
+
+
+
+5.1 notification.component.css
+
+div{    
+    margin: 10px 0px;    
+    padding: 0px 20px;     
+    text-align: center;
+    height: 40px;
+}
+p{
+    font-size: 14px;
+    margin: 10px 0px
+}
+.close{
+    float: right;
+    margin-top: -42px;
+    margin-right: -40px;
+}
+.fadeOut{
+    visibility: hidden;
+    opacity: 0;
+    transition: visibility 0s 1.4s, opacity 1.4s linear;
+}
+
+
+
+
+
+5.2 notification.component.html
+
+<div class="alert alert-success" [ngClass]="{fadeOut: displayNotification}">
+    <p>This website uses cookies to store data.</p>
+    <div class="close"><button class="btn" (click)="closeNotification()">x</button></div>
+</div>
+
+
+
+
+
+5.3 notification.component.ts
+
+import { Component } from '@angular/core';
+
+@Component({
+  selector: 'app-notification',
+  templateUrl: './notification.component.html',
+  styleUrls: ['./notification.component.css']
+})
+export class NotificationComponent {
+     displayNotification: boolean =false;
+
+     closeNotification(){
+      this.displayNotification=true;
+     }
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+6.1 product-details.component.css
+
+.container{
+    width: 500px;
+    display: flex;
+    margin: 15px 5px;
+    padding: 5px 5px;
+    border-radius: 5px;
+    background-color: aliceblue;
+}
+.product-detail{
+    padding: 20px 20px;
+}
+
+
+
+
+
+
+6.2 product-details.component.html
+
+<div class="container" >
+    <div>
+        <img [src]="product.image" height="120" width="120">
+    </div>
+    <div class="product-detail">
+        <p><b>Name:</b> {{ product.name }}</p>
+        <p><b>Price:</b> {{ product.price }}</p>
+        <p><b>Color:</b> {{ product.color }}</p>
+        <p><b>Manufacturer:</b> {{ product.manufacturer }}</p>
+        <p><b>Seller:</b> {{ product.seller }}</p>
+        <p><b>Free Delivery:</b> {{ product.free_delivery }}</p>
+        <p><b>Country of Origin</b>{{ product.country_of_origin}}</p>
+    </div>
+</div>>
+
+
+
+
+
+
+6.3 product-details.component.ts
+
+import { Component, OnInit } from '@angular/core';
+import { ProductService } from '../Services/product.service'
+
+@Component({
+  selector: 'app-product-details',
+  templateUrl: './product-details.component.html',
+  styleUrls: ['./product-details.component.css']
+})
+export class ProductDetailsComponent implements OnInit{
+  constructor(private ProductService: ProductService){ }
+
+  product: {name: string, price: string, color: string, available: string, image: string,manufacturer: string, seller: string, free_delivery: string, country_of_origin: string};
+  
+  ngOnInit(): void {
+     this.ProductService.OnShowDetailsClicked.subscribe(( data: {name: string, price: string, color: string, available: string, image: string,manufacturer: string, seller: string, free_delivery: string, country_of_origin: string}) => { 
+      this.product = data;
+    })
+  }
+}
+
+
+
+
+
+
+
+
+
+
+
+
+7.1 product-section.component.css
+
+.container{
+    width: 1000px;
+    align-self: center;
+    margin: 5px 5px;
+    padding: 0.5px 0.5px;
+    border-radius: 5px;
+    background-color: #F5B041;
+}
+
+
+
+
+
+7.2 product-section.component.html
+
+<div class="container">
+    <app-products></app-products>
+    <app-product-details></app-product-details>
+</div>
+
+
+
+
+
+7.3 product-section.component.ts
+
+import { Component } from '@angular/core';
+import{ ProductService } from '../Services/product.service'
+
+@Component({
+  selector: 'app-product-section',
+  templateUrl: './product-section.component.html',
+  styleUrls: ['./product-section.component.css'],
+  providers: [  ProductService ]
+})
+export class ProductSectionComponent {
+  constructor(private ProductService: ProductService){}
+
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+8.1 products.component.css
+
+.product-container{
+    width: 500px;
+    display: flex;
+    margin: 15px 5px;
+    padding: 5px 5px;
+    border-radius: 5px;
+}
+.image-container{
+    background-color: #fff;
+    height: 120px;
+    padding: 10px 0px;
+    width: 40%;
+}
+.detail-container{
+
+    margin: 0px 20px;
+}
+.name-container{
+    margin: 10px 20px;
+    text-decoration: underline;
+    width: 100%;
+}
+.details{
+    width: 140px;
+    
+}
+.options{
+    width: 220px;
+    height: 30px;
+    margin-right: 2%;  
+    padding-left: 100px;   
+}
+.btn{
+    border-radius: none;
+    margin: 0px 5px;
+    padding: 2px 10px;
+    font-size: 12px;
+
+}
+
+
+
+
+
+
+8.2 products.component.html
+
+<div>
+    <app-search (newSearchValue)="searchedProducts($event)"></app-search>
+    <app-filter [all]="getTotalProducts()" [available]="getAvailableProducts()" (selectionChange)="filteredSelection($event)"></app-filter>
+</div>
+
+<ng-container *ngFor="let p of products">
+    <ng-container *ngIf="selectedButton === 'All' || selectedButton === p.available">
+        <div *ngIf="searchedText === '' || p.name.toLowerCase().includes(searchedText, 0)">
+            <div class="product-container" [ngStyle]="{backgroundColor: p.available === 'Available' ? '#D5F5E3' : '#FAD8D8'}">
+                <div class="image-container"><img [src]="p.image" alt="" style="max-height: 100px; max-width: 100px;"></div>
+                <div>
+                    <div class="name-container"><h6>{{p.name}}</h6></div>
+                    <div class="detail-container">
+                        <div class="details">{{p.price}}</div>
+                        <div class="details" [ngStyle]="{color: p.available === 'Available' ? 'Green' : 'Red'}">{{p.available}}</div>
+                    </div>
+                </div>
+                <div class="options">
+                    <button class="btn btn-warning" (click)="ShowDetails(p)">Show Details</button>
+                    <button class="btn btn-success" *ngIf="p.available ==='Available' ; else notifyme" (click)="BuyNow()">Buy Now</button>
+                    <ng-template #notifyme>
+                        <button class="btn btn-danger" (click)="NotifyMe()">Notify Me</button>
+                    </ng-template>         
+                </div>
+            </div>
+        </div>
+    </ng-container>
+</ng-container>
+
+
+
+
+
+
+
+8.3 products.component.ts
+
+
+import { Component, OnInit } from '@angular/core';
+import { AddToCartService } from '../Services/addToCart.service'
+import{ ProductService } from '../Services/product.service'
+
+@Component({
+  selector: 'app-products',
+  templateUrl: './products.component.html',
+  styleUrls: ['./products.component.css'],
+  providers: [AddToCartService]
+})
+export class ProductsComponent implements OnInit{
+  products: {name: string, price: string, color: string, available: string, image: string,manufacturer: string, seller: string, free_delivery: string, country_of_origin: string}[]=[]
+
+  ShowDetails(p: {name: string, price: string, color: string, available: string, image: string,manufacturer: string, seller: string, free_delivery: string, country_of_origin: string}){
+    this.ProductService.ShowProductDetails(p)
+  }
+
+  ngOnInit(){
+    this.products=this.ProductService.products
+  }
+  
+  getTotalProducts(){
+    return this.products.length;
+  }
+  getAvailableProducts(){
+    return this.products.filter(product => product.available === 'Available').length;
+  }
+
+  selectedButton: string='All';
+
+  filteredSelection(data: string){
+    this.selectedButton=data
+    //console.log(this.selectedButton)
+  }
+
+  searchedText: string='';
+
+  searchedProducts(searchedData: string){
+    this.searchedText= searchedData;
+    //console.log(this.searchedText)
+  }
+
+  title = "Product"
+
+  constructor(private addToCart: AddToCartService, private ProductService: ProductService){}
+  BuyNow(){
+    this.addToCart.onBuyNowClicked(this.title)
+  }
+  NotifyMe(){
+    this.addToCart.onNotifyMeClicked()
+  }
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+9.1 search.component.css
+
+.search-div{
+    margin: 10px 0px;
+    padding: 10px 20px;
+    border-radius: 5px;
+}
+
+input[type=text]{
+    width: 240px;
+    height: 30px;
+    margin-left: 20px;
+    border: none;
+}
+.changeBackground{
+    background-color:lightyellow;
+}
+
+
+
+
+
+9.2 search.component.html
+
+<div class="search-div" [ngClass]="{changeBackground: searchValue != ''}">
+    <span><b>Search:</b></span>
+    <!--input type="text" (input)="changeSearchValue($event)"-->
+    <input type="text" [(ngModel)]="searchValue" (input)="searching()">
+    <span *ngIf="searchValue != ''"><p>You searched for {{ searchValue }}</p></span>
+</div>
+
+
+
+
+
+
+9.3 search.component.ts
+
+import { Component, EventEmitter, Output } from '@angular/core';
+
+@Component({
+  selector: 'app-search',
+  templateUrl: './search.component.html',
+  styleUrls: ['./search.component.css']
+})
+export class SearchComponent {
+  
+  searchValue: string = '';
+  
+  changeSearchValue(eventData: Event){
+  console.log((<HTMLInputElement>eventData.target).value)
+  this.searchValue=(<HTMLInputElement>eventData.target).value
+  }
+ 
+  @Output()
+  newSearchValue: EventEmitter<string> = new EventEmitter<string>();
+
+  searching(){
+    this.newSearchValue.emit(this.searchValue)
+    //console.log(this.searchValue)
+  }
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+10.1 addToCart.service.ts 
+
+export class AddToCartService{
+    onBuyNowClicked(title: string){
+        alert(title+' added to cart.');
+    }
+    onNotifyMeClicked(){
+        alert('You will be notified.')
+    }
+}
+
+
+
+
+
+product.service.ts
+
+import { EventEmitter } from "@angular/core";
+
+export class ProductService{
+    products = [
+        {name: 'Minimalist Analog Watch', price: '$109', color: 'Black', available: 'Available', image: '/assets/products/img1.jpg', manufacturer:'', seller:'', free_delivery:'', country_of_origin:''},
+        {name: 'Hisense Ultra HD Smart Tv' ,price: '$3339' ,color: 'Black' ,available: 'Available' ,image: '/assets/products/img2.jpg', manufacturer:'', seller:'', free_delivery:'', country_of_origin:''},
+        {name: 'Apple iPhone 12 Pro Max' ,price: '$1855' ,color: 'Black' ,available: 'Not Available' ,image: '/assets/products/img3.jfif', manufacturer:'', seller:'', free_delivery:'', country_of_origin:''},
+        {name: 'LG Fully Automatic Front Load Washing Machine' ,price: '$1765' ,color: 'White' ,available:'Available' ,image: '/assets/products/img4.avif', manufacturer:'', seller:'', free_delivery:'', country_of_origin:''},
+        {name: 'LG Refrigerator with Door Cooling' ,price: '$2851' ,color: 'White' ,available: 'Not Available' ,image: '/assets/products/img5.avif', manufacturer:'', seller:'', free_delivery:'', country_of_origin:''},
+        {name: 'Dell Inspiron One 27 Ryzen 7' ,price: '$2145' ,color: 'White' ,available: 'Available' ,image: '/assets/products/img6.jpg', manufacturer:'', seller:'', free_delivery:'', country_of_origin:''}
+    
+    ];
+
+    OnShowDetailsClicked= new EventEmitter<{name: string, price: string, color: string, available: string, image: string,manufacturer: string, seller: string, free_delivery: string, country_of_origin: string}>();
+
+    ShowProductDetails(p: {name: string, price: string, color: string, available: string, image: string,manufacturer: string, seller: string, free_delivery: string, country_of_origin: string}){
+        this.OnShowDetailsClicked.emit(p)
+    }
+
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+0.1 app.component.css
+
+.wrapper{
+    background-color: #f8cb88;
+}
+
+
+
+
+
+0.2 app.component.html
+
+<div class="wrapper">
+  <app-container></app-container>
+</div>
+
+
+
+
+
+0.3 app.component.ts
+
+import { Component } from '@angular/core';
+
+@Component({
+  selector: 'app-root',
+  templateUrl: './app.component.html',
+  styleUrls: ['./app.component.css']
+})
+export class AppComponent {
+  title = 'AngularComponent';
+}
+
+
+
+
+
+0.4
+
+import { NgModule } from '@angular/core';
+import { BrowserModule } from '@angular/platform-browser';
+
+import { AppComponent } from './app.component';
+import { ContainerComponent } from './Container/container.component';
+import { NavComponent } from './nav/nav.component';
+import { HeaderComponent } from './header/header.component';
+import { NotificationComponent } from './notification/notification.component';
+import { SearchComponent } from './search/search.component';
+import { FormsModule } from '@angular/forms';
+import { ProductsComponent } from './products/products.component';
+import { FilterComponent } from './filter/filter.component';
+import { AddToCartService } from './Services/addToCart.service';
+import { ProductSectionComponent } from './product-section/product-section.component';
+import { ProductDetailsComponent } from './product-details/product-details.component';       //Heirarcial Dependency Injection into products component 
+
+@NgModule({
+  declarations: [
+    AppComponent,
+    ContainerComponent,
+    NavComponent,
+    HeaderComponent,
+    NotificationComponent,
+    SearchComponent,
+    ProductsComponent,
+    FilterComponent,
+    ProductSectionComponent,
+    ProductDetailsComponent,
+  ],
+  imports: [
+    BrowserModule,
+    FormsModule
+  ],
+  providers: [AddToCartService], //Heirarcial Dependency Injection into products component
+  bootstrap: [AppComponent]
+})
+export class AppModule { }
+
+
+
+
+
+
+
+
+
+0.5 styles.css
+
+/* You can add global styles to this file, and also import other style files */
+*{
+    margin: 0px 0px;
+    padding: 0px 0px;
+    box-sizing: border-box;
+    font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
+
+}
+
+
+
+
+0.6 In angular.json edit the following part of the code....
+
+
+"styles": [
+              "node_modules/bootstrap/dist/css/bootstrap.min.css",
+              "src/styles.css"
+            ],
